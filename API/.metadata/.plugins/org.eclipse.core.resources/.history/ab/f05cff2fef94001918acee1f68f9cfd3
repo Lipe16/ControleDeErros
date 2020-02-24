@@ -1,0 +1,37 @@
+package digifarma.ferreira.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import digifarma.ferreira.model.Erro;
+import digifarma.ferreira.repository.ErroRepository;
+
+@Service
+public class ErroService {
+	
+	@Autowired
+	ErroRepository erroRepository;
+	
+	
+	public List<Erro> getErros() {
+		System.out.println(SecurityContextHolder.getContext().getAuthentication());
+		return erroRepository.findAll();
+	}
+
+
+	public Erro getErro(Long id) {
+
+		return erroRepository.findById(id).get();
+	}
+
+
+	public Erro salvar(Erro erro) {
+		return erroRepository.save(erro);
+	}
+	
+	
+
+}

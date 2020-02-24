@@ -1,0 +1,37 @@
+package digifarma.ferreira.dto;
+
+public class ImagemErroDTO {
+	private Long id;
+	private String img;
+	private Long codErro;
+	private String caminho;
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public Long getCodErro() {
+		return codErro;
+	}
+	public void setCodErro(Long codErro) {
+		this.codErro = codErro;
+	}
+	public String getCaminho() {
+		return caminho;
+	}
+	public void setCaminho(String caminho) {
+		this.caminho = caminho;
+	}
+	
+	
+
+}

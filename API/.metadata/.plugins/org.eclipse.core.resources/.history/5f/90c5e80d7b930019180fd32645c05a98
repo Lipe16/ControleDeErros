@@ -1,0 +1,7 @@
+package digifarma.ferreira.security;
+
+
+
+public class UserDetailsService implements UserDetailsService {
+
+}

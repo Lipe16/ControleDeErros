@@ -1,0 +1,82 @@
+package digifarma.ferreira.service;
+
+
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import digifarma.ferreira.dto.ImagemErroDTO;
+import digifarma.ferreira.model.Erro;
+import digifarma.ferreira.repository.ErroRepository;
+
+@Service
+public class ErroService {
+	
+	@Autowired
+	ErroRepository erroRepository;
+	
+	
+	public List<Erro> getErros() {
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		return erroRepository.findAll();
+	}
+	
+
+
+	public Erro getErro(Long id) {
+
+		return erroRepository.findById(id).get();
+	}
+
+
+	public Erro salvar(Erro erro) {
+		return erroRepository.save(erro);
+	}
+	
+	
+	
+	public Boolean salvarImagem( ImagemErroDTO imagem) throws IOException {
+		imagem.setCaminho(imagem.getCodErro()+"\\"+imagem.getId().toString()+".jpg");
+		base64ParaImagem(imagem.getCaminho(), imagem);
+		return true;
+	}
+	
+	
+	public void base64ParaImagem(String nomeImagem, ImagemErroDTO imagem)throws IOException {
+
+        byte[]  imageByte = Base64.getDecoder().decode(imagem.getImg().substring(23));
+
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+		BufferedImage image = ImageIO.read(bis);
+		bis.close();
+		
+        int new_w = 200, new_h = 200;
+        BufferedImage new_img = new BufferedImage(new_w, new_h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = new_img.createGraphics();
+
+        g.drawImage(image, 0, 0, new_w, new_h, null);
+        ImageIO.write(new_img, "JPG", new File("c:/nweImg.jpg"));
+		
+
+		File outputfile = new File("C:\\"+nomeImagem);
+		ImageIO.write(image, "jpg", outputfile);
+
+	}
+	
+
+}

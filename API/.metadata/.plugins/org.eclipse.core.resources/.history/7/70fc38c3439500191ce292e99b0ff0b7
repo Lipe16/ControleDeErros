@@ -1,0 +1,33 @@
+package digifarma.ferreira.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import digifarma.ferreira.dto.UsuarioDTO;
+import digifarma.ferreira.model.Usuario;
+import digifarma.ferreira.repository.UsuarioRepository;
+
+@Service
+public class UsuarioService {
+	@Autowired
+	UsuarioRepository usuarioRepository;
+	
+	
+	public Usuario getUsuarioLogado() {
+		return usuarioRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
+	
+	public List<UsuarioDTO> getUsuarios(){
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		List<UsuarioDTO> usuariosDTO = new ArrayList<UsuarioDTO>();
+		
+		for(Usuario usuario: usuarios) {
+			usuariosDTO.add(new UsuarioDTO(usuario));
+		}
+		
+	}
+}

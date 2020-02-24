@@ -1,0 +1,8 @@
+package digifarma.ferreira.security;
+
+import org.springframework.stereotype.Component;
+
+@Service
+public class UserDetailsService implements UserDetailsService {
+
+}

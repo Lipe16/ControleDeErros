@@ -1,0 +1,65 @@
+package digifarma.ferreira.dto;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import digifarma.ferreira.model.Usuario;
+import digifarma.ferreira.service.UsuarioService;
+
+public class UsuarioComSenhaDTO extends UsuarioDTO{
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	UsuarioService usuarioService;
+	
+	private String senha;
+	
+	public UsuarioComSenhaDTO() {
+		
+	}
+	
+	public UsuarioComSenhaDTO(UsuarioComSenhaDTO usuario) {
+		this.setId(usuario.getId());
+		this.setNome(usuario.getNome());
+		this.setEmail(usuario.getEmail());
+		this.setPerfil(usuario.getPerfil());
+		
+		if(usuario.getSenha() != null && !usuario.getSenha().equals("") && usuario.getSenha().length() > 4)
+			this.setSenha(passwordEncoder.encode( usuario.getSenha()));
+	}
+	
+	
+	public Usuario getusuario() {
+		Usuario usuario = new Usuario();
+		
+		
+		if(this.getId() != null)
+			usuario.setId(this.getId());
+		
+		
+		usuario.setNome(this.getNome());
+		usuario.setEmail(this.getEmail());
+		usuario.setPerfil(this.getPerfil());
+		if(this.getSenha() != null && !this.getSenha().equals("") && this.getSenha().length() > 4) {
+			usuario.setSenha(passwordEncoder.encode(this.getSenha()));
+		}else {
+			System.out.println(usuarioService.getUsuarioPorId( this.getId() ).getSenha());
+			usuario.setSenha(usuarioService.getUsuarioPorId( this.getId() ).getSenha());
+		}
+		
+		return usuario;
+		
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
+}

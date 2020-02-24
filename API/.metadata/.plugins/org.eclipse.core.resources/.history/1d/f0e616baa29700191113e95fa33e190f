@@ -1,0 +1,106 @@
+package digifarma.ferreira.service;
+
+
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import digifarma.ferreira.dto.ImagemErroDTO;
+import digifarma.ferreira.model.Erro;
+import digifarma.ferreira.repository.ErroRepository;
+
+@Service
+public class ErroService {
+	
+	@Autowired
+	ErroRepository erroRepository;
+	
+	
+	public List<Erro> getErros() {
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		return erroRepository.findAll();
+	}
+	
+
+
+	public Erro getErro(Long id) {
+
+		return erroRepository.findById(id).get();
+	}
+
+
+	public Erro salvar(Erro erro) {
+		return erroRepository.save(erro);
+	}
+	
+	
+	
+	public Boolean salvarImagem( ImagemErroDTO imagem) throws IOException {
+		imagem.setCaminho(imagem.getCodErro()+"\\"+(new Date()).getTime());
+		base64ParaImagem(imagem.getCaminho(), imagem);
+		return true;
+	}
+	
+	
+	public void base64ParaImagem(String nomeImagem, ImagemErroDTO imagem)throws IOException {
+
+        byte[]  imageByte = Base64.getDecoder().decode(imagem.getImg().substring(23));
+
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+		BufferedImage image = ImageIO.read(bis);
+		bis.close();
+		
+        int new_w = 100, new_h = 100;
+        BufferedImage new_img = new BufferedImage(new_w, new_h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = new_img.createGraphics();
+
+        File dir=new File("C:\\imagens\\"+imagem.getCodErro());
+        dir.mkdirs();
+        
+        g.drawImage(image, 0, 0, new_w, new_h, null);
+        ImageIO.write(new_img, "JPG", new File("C:\\imagens\\"+nomeImagem+"_pequena.jpg"));
+		
+
+		File outputfile = new File("C:\\imagens\\"+nomeImagem+".jpg");
+		ImageIO.write(image, "jpg", outputfile);
+
+	}
+	
+	public List<String> getListarImagens(Long id) {
+		File f = null;
+	    File[] paths;
+	    List<String> lista = new ArrayList();
+	      
+	      try {  
+	         f = new File("c:/imagens/"+id);
+	         paths = f.listFiles();
+	         for(File path:paths) {
+	            System.out.println(path);
+	         }
+	         
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      
+	      return null;
+	}
+	
+
+}

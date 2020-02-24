@@ -1,0 +1,28 @@
+package digifarma.ferreira.dto;
+
+import digifarma.ferreira.model.Usuario;
+
+public class UsuarioComSenhaDTO extends UsuarioDTO{
+	
+	private String senha;
+	
+	public UsuarioComSenhaDTO(Usuario usuario) {
+		this.setId(usuario.getId());
+		this.setNome(usuario.getNome());
+		this.setEmail(usuario.getEmail());
+		this.setPerfil(usuario.getPerfil());
+		this.setSenha(usuario.getSenha());
+		
+		
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
+}

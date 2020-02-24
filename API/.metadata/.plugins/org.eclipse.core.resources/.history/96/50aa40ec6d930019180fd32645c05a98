@@ -1,0 +1,7 @@
+package digifarma.ferreira.security;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public class MyUserDetailService implements UserDetailsService{
+
+}

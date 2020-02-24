@@ -1,0 +1,5 @@
+package digifarma.ferreira.security;
+
+public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter{
+
+}

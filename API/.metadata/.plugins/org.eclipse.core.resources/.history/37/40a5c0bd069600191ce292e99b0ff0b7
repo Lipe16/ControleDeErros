@@ -1,0 +1,50 @@
+package digifarma.ferreira.dto;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import digifarma.ferreira.model.Usuario;
+
+public class UsuarioComSenhaDTO extends UsuarioDTO{
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	private String senha;
+	
+	public UsuarioComSenhaDTO(UsuarioComSenhaDTO usuario) {
+		this.setId(usuario.getId());
+		this.setNome(usuario.getNome());
+		this.setEmail(usuario.getEmail());
+		this.setPerfil(usuario.getPerfil());
+		this.setSenha(passwordEncoder.encode( usuario.getSenha()));
+	}
+	
+	
+	public Usuario getusuario() {
+		Usuario usuario = new Usuario();
+		
+		
+		if(this.getId() != null)
+			usuario.setId(this.getId());
+		
+		
+		usuario.setNome(this.getNome());
+		usuario.setEmail(this.getEmail());
+		usuario.setPerfil(this.getPerfil());
+		usuario.setSenha(this.getSenha());
+		
+		return usuario;
+		
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
+}

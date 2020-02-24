@@ -1,0 +1,19 @@
+package digifarma.ferreira.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import digifarma.ferreira.model.Usuario;
+import digifarma.ferreira.repository.UsuarioRepository;
+
+@Service
+public class UsuarioService {
+	@Autowired
+	UsuarioRepository usuarioRepository;
+	
+	
+	public Usuario usuarioService() {
+		return usuarioRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
+}

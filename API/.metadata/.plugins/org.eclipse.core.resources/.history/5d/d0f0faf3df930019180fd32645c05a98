@@ -1,0 +1,5 @@
+package digifarma.ferreira.enums;
+
+public enum Perfil {
+	TECNICO, PROGRAMADOR, ADM
+}

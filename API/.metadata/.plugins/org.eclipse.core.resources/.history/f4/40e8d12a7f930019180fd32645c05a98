@@ -1,0 +1,104 @@
+package digifarma.ferreira.model;
+
+import java.util.ArrayList;
+
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import digifarma.ferreira.enums.Perfil;
+import javax.persistence.Enumerated;
+
+@Entity
+@Table(name = "usuario")
+public class Usuario {	
+	private Long id;
+	private String nome;
+	private Perfil perfil;
+	private String senha;
+	private String email;
+	private List<Perfil> perfis;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	public Usuario(Usuario usuario) {
+		this.id = usuario.getId();
+		this.nome = usuario.getNome();
+		this.email = usuario.getEmail();
+		this.perfil = usuario.getPerfil();
+		this.senha = usuario.getSenha();
+	}
+	
+	
+	public Collection<? extends GrantedAuthority> getPerfis() {
+		Collection<GrantedAuthority> auths = new ArrayList<>();
+		
+		Perfil[] lista = Perfil.values();
+		
+		for(int i=0; i<lista.length; i++) {
+			
+			auths.add( new SimpleGrantedAuthority(lista[i].toString()));
+		}
+		this.perfis = auths;
+		return auths;
+	}
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	@Column(name = "nome")
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "perfil")
+	public Perfil getPerfil() {
+		return perfil;
+	}
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+	
+	@Column(name = "senha")
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = passwordEncoder.encode(senha);
+	}
+
+	@Column(name = "email")
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+	
+}

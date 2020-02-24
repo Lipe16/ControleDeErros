@@ -1,0 +1,17 @@
+package digifarma.ferreira.security;
+
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+        .csrf().disable().authorizeRequests()
+        .antMatchers("/**").hasRole("TECNICO")
+        .antMatchers("/programador/**").hasRole("PROGRAMADOR")
+        .antMatchers("/login/**").permitAll()
+        .anyRequest()
+            .authenticated();
+    }
+}

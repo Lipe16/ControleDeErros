@@ -1,0 +1,43 @@
+package digifarma.ferreira.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import digifarma.ferreira.dto.ErroDTO;
+import digifarma.ferreira.dto.UsuarioComSenhaDTO;
+import digifarma.ferreira.dto.UsuarioDTO;
+import digifarma.ferreira.model.Erro;
+import digifarma.ferreira.model.Usuario;
+import digifarma.ferreira.service.UsuarioService;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class UsuarioController {
+	
+	@Autowired
+	UsuarioService usuarioService;
+	
+	@GetMapping(value = "/usuario")
+	public UsuarioDTO getUsuarioLogado(){
+		return new UsuarioDTO(usuarioService.getUsuarioLogado());
+	}
+	
+	@GetMapping(value = "/usuarios")
+	public List<UsuarioDTO> getUsuarios(){
+		return usuarioService.getUsuarios();
+	}
+	
+	@PostMapping(value = "/erro")
+	public Usuario save(@RequestBody UsuarioComSenhaDTO usuarioComSenhaDTO){	
+
+		return usuarioService.salvar(usuarioComSenhaDTO.getusuario());
+	}
+	
+
+}

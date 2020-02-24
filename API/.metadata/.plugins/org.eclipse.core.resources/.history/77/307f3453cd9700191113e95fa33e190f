@@ -1,0 +1,10 @@
+package digifarma.ferreira.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import digifarma.ferreira.model.Erro;
+
+public interface ErroRepository extends JpaRepository<Erro, Long>{
+
+
+}

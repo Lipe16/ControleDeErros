@@ -1,0 +1,5 @@
+package digifarma.ferreira.dto;
+
+public class UsuarioComSenhaDTO {
+
+}

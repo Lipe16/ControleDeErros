@@ -1,0 +1,16 @@
+package digifarma.ferreira.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import digifarma.ferreira.model.Erro;
+
+public interface ErroRepository extends JpaRepository<Erro, Long>{
+
+	@Query("SELECT erro FROM Erro erro order by erro.id desc")
+	Optional<List<Erro>> getErrosDesc();
+
+}

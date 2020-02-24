@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #b61414;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@import   '../node_modules/primereact/resources/primereact.min.css';
+@import   '../node_modules/primeicons/primeicons.css';
+@import   '../node_modules/primereact/resources/themes/nova-dark/theme.css' ;
+
+
+
+.p-lightbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index:4000;
+}
+.p-component-overlay .p-dialog-mask{
+  z-index:0 !important;
+}
+
+.p-dialog .p-component .p-dialog-visible .p-dialog-enter-done{
+
+  z-index:4000 !important;
+}
+
+.p-lightbox-nav-right, .p-lightbox-nav-left {
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+   position:absolute;
+   background-color:red;
+   z-index:9000;
+    display:none;
+  }
+
+  .p-lightbox-nav-right:hover, .p-lightbox-nav-left:hover {
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+     position:absolute;
+     background-color:red;
+     z-index:9000;
+
+    }
+  
